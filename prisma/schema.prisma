@@ -22,11 +22,11 @@ model Level {
 }
 
 model Target {
-  id      Int    @id @default(autoincrement())
-  name    String
-  x       Float
-  y       Float
-  
-  level   Level  @relation(fields: [levelId], references: [id])
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  x    Float
+  y    Float
+
+  level   Level @relation(fields: [levelId], references: [id])
   levelId Int
 }
