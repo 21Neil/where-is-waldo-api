@@ -27,3 +27,13 @@ export const checkLocation = async (req, res, next) => {
     next(err);
   }
 };
+
+export const startGame = async (req, res, next) => {
+  req.session.gameData = {
+    startTime: Date.now(),
+    foundTarget: [],
+    levelId: req.body.levelId
+  }
+
+  res.json({ message: 'Game started'})
+};

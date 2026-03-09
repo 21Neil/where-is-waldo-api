@@ -30,3 +30,10 @@ model Target {
   level   Level @relation(fields: [levelId], references: [id])
   levelId Int
 }
+
+model session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}

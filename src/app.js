@@ -1,6 +1,7 @@
 import express from 'express';
 import apiRouter from './routes/apiRouter.js';
 import cors from 'cors';
+import sessionMiddleware from './middleware/sessionMiddleware.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.use(
   }),
 );
 app.use(express.json());
+app.use(sessionMiddleware);
 
 app.use('/api', apiRouter);
 
