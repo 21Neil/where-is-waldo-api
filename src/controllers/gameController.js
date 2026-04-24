@@ -1,10 +1,14 @@
-import { getGameboardUrl, getTarget } from '../services/gameService.js';
+import {
+  getAllLevels,
+  getGameboardUrl,
+  getTarget,
+} from '../services/gameService.js';
 
 export const gameboard = async (req, res, next) => {
-  const name = req.body.name;
+  const id = +req.params.id;
 
   try {
-    const info = await getGameboardUrl(name);
+    const info = await getGameboardUrl(id);
     res.json({ id: info.id, imageUrl: info.imageUrl });
   } catch (err) {
     next(err);
@@ -32,8 +36,18 @@ export const startGame = async (req, res, next) => {
   req.session.gameData = {
     startTime: Date.now(),
     foundTarget: [],
-    levelId: req.body.levelId
-  }
+    levelId: req.body.levelId,
+  };
 
-  res.json({ message: 'Game started'})
+  res.json({ message: 'Game started' });
+};
+
+export const allLevels = async (req, res, next) => {
+  try {
+    const levels = await getAllLevels();
+
+    res.json(levels);
+  } catch (err) {
+    next(err);
+  }
 };
