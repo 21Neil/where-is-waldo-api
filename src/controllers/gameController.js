@@ -1,15 +1,16 @@
 import {
   getAllLevels,
-  getGameboardUrl,
+  getGameboard,
   getTarget,
-  getTotalTarget,
+  getTargets,
 } from '../services/gameService.js';
 
 export const gameboard = async (req, res, next) => {
   try {
     const id = +req.params.id;
-    const info = await getGameboardUrl(id);
-    res.json({ id: info.id, imageUrl: info.imageUrl });
+    const info = await getGameboard(id);
+
+    res.json(info);
   } catch (err) {
     next(err);
   }
@@ -33,12 +34,12 @@ export const checkLocation = async (req, res, next) => {
     if (!gameData) return res.status(403).json({ message: 'SESSION_EXPIRED' });
 
     if (isCorrect) {
-      const totalTarget = await getTotalTarget(levelId);
-      const totalTargetLength = totalTarget.target.length;
+      const targets = await getTargets(levelId);
+      const targetsLength = targets.targets.length;
 
       if (!gameData.foundTargetNames.includes(name))
         gameData.foundTargetNames.push(name);
-      if (gameData.foundTargetNames.length === totalTargetLength) {
+      if (gameData.foundTargetNames.length === targetsLength) {
         const duration = Date.now() - gameData.startTime;
 
         return res.json({

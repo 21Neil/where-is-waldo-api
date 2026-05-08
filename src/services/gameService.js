@@ -1,9 +1,16 @@
 import prisma from '../../lib/prisma.js';
 
-export const getGameboardUrl = async id => {
+export const getGameboard = async id => {
   return await prisma.level.findUnique({
     where: {
       id,
+    },
+    include: {
+      targets: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
 };
@@ -26,13 +33,17 @@ export const getAllLevels = async () => {
   });
 };
 
-export const getTotalTarget = async id => {
+export const getTargets = async id => {
   return await prisma.level.findUnique({
     where: {
       id,
     },
     select: {
-      target: true,
+      targets: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
 };

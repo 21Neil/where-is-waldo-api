@@ -18,7 +18,7 @@ model Level {
   id       Int      @id @default(autoincrement())
   name     String   @unique
   imageUrl String
-  target   Target[]
+  targets   Target[]
 }
 
 model Target {
