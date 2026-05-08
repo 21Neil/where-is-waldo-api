@@ -25,3 +25,14 @@ export const getAllLevels = async () => {
     },
   });
 };
+
+export const getTotalTarget = async id => {
+  return await prisma.level.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      target: true,
+    },
+  });
+};
