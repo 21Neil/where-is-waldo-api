@@ -36,14 +36,14 @@ export const checkLocation = async (req, res, next) => {
       const totalTarget = await getTotalTarget(levelId);
       const totalTargetLength = totalTarget.target.length;
 
-      gameData.foundTarget.push(name);
-      if (gameData.foundTarget.length === totalTargetLength) {
+      gameData.foundTargetNames.push(name);
+      if (gameData.foundTargetNames.length === totalTargetLength) {
         const duration = Date.now() - gameData.startTime;
 
         return res.json({
           result: isCorrect,
           isGameOver: true,
-          foundTarget: gameData.foundTarget,
+          foundTargetNames: gameData.foundTargetNames,
           duration,
         });
       }
@@ -52,7 +52,7 @@ export const checkLocation = async (req, res, next) => {
     return res.json({
       result: isCorrect,
       isGameOver: false,
-      foundTarget: gameData.foundTarget,
+      foundTargetNames: gameData.foundTargetNames,
     });
   } catch (err) {
     next(err);
@@ -63,7 +63,7 @@ export const startGame = async (req, res, next) => {
   try {
     req.session.gameData = {
       startTime: Date.now(),
-      foundTarget: [],
+      foundTargetNames: [],
       levelId: req.body.levelId,
     };
 
