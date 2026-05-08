@@ -29,14 +29,15 @@ export const checkLocation = async (req, res, next) => {
       y < target.y + 2;
 
     const gameData = req.session.gameData;
-    
-    if (!gameData) return res.status(403).json({ message: "SESSION_EXPIRED" })
+
+    if (!gameData) return res.status(403).json({ message: 'SESSION_EXPIRED' });
 
     if (isCorrect) {
       const totalTarget = await getTotalTarget(levelId);
       const totalTargetLength = totalTarget.target.length;
 
-      gameData.foundTargetNames.push(name);
+      if (!gameData.foundTargetNames.includes(name))
+        gameData.foundTargetNames.push(name);
       if (gameData.foundTargetNames.length === totalTargetLength) {
         const duration = Date.now() - gameData.startTime;
 
