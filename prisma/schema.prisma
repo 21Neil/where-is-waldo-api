@@ -18,7 +18,7 @@ model Level {
   id       Int      @id @default(autoincrement())
   name     String   @unique
   imageUrl String
-  targets   Target[]
+  targets  Target[]
 }
 
 model Target {
@@ -36,4 +36,12 @@ model session {
   sid       String   @unique
   data      String
   expiresAt DateTime
+}
+
+model Leaderboard {
+  id        Int      @id @default(autoincrement())
+  name      String
+  score     Int
+  levelId   Int
+  createdAt DateTime @default(now())
 }
