@@ -10,6 +10,9 @@ export const getGameboard = async id => {
         select: {
           name: true,
         },
+        orderBy: {
+          id: 'asc',
+        },
       },
     },
   });
@@ -18,8 +21,10 @@ export const getGameboard = async id => {
 export const getTarget = async (name, levelId) => {
   return await prisma.target.findUnique({
     where: {
-      name,
-      levelId,
+      name_levelId: {
+        name,
+        levelId,
+      },
     },
   });
 };
@@ -29,6 +34,7 @@ export const getLevels = async () => {
     select: {
       id: true,
       name: true,
+      thumbnailUrl: true,
     },
   });
 };
@@ -58,11 +64,11 @@ export const createLeaderboardEntry = async data => {
   const higherScoreCount = await prisma.leaderboard.count({
     where: {
       levelId,
-      score: { lt: score }
-    }
-  })
+      score: { lt: score },
+    },
+  });
 
-  const rank = higherScoreCount + 1
+  const rank = higherScoreCount + 1;
 
   return rank;
 };

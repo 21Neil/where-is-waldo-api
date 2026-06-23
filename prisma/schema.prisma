@@ -15,20 +15,23 @@ datasource db {
 }
 
 model Level {
-  id       Int      @id @default(autoincrement())
-  name     String   @unique
-  imageUrl String
-  targets  Target[]
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  imageUrl     String
+  thumbnailUrl String
+  targets      Target[]
 }
 
 model Target {
   id   Int    @id @default(autoincrement())
-  name String @unique
+  name String
   x    Float
   y    Float
 
+
   level   Level @relation(fields: [levelId], references: [id])
   levelId Int
+  @@unique([name, levelId])
 }
 
 model session {
